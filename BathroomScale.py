@@ -1,7 +1,13 @@
 #! /usr/bin/python2
+# To do: 
+#   put all weights in a list or dictionary
+#   analyze all data for a spike and get all numbers from that spike
+
 
 import time
 import sys
+
+data = []
 
 EMULATE_HX711=False
 
@@ -37,6 +43,12 @@ print("Tare done! Add weight now...")
 while True:
     try:
         val = hx.get_weight(5)
+        val = val/453.59237
+        weights.append(val)
+        if len(data) > 500:
+            data.pop(0)
+
+        print(len(data))
         print(val)
 
         hx.power_down()
