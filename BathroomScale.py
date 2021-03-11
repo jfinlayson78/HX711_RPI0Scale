@@ -12,7 +12,8 @@ import praw
 import requests
 
 #Discord Webhook Stuff
-
+WEBHOOK_ID = '809616222194106389'
+WEBHOOK_TOKEN = '0PflNSB9iiBMJkRUsz_uQsF7-AM3XXAJRKIn-K9lEZZZTvcABCu-oxNUk_jqqUiW0V-4'
 
 
 data = []
