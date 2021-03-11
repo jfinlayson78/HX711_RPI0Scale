@@ -44,7 +44,7 @@ while True:
     try:
         val = hx.get_weight(5)
         val = val/453.59237
-        weights.append(val)
+        data.append(val)
         if len(data) > 500:
             data.pop(0)
 
