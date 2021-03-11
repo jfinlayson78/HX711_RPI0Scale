@@ -8,13 +8,19 @@
 
 import time
 import sys
+import praw
+import requests
+
+#Discord Webhook Stuff
+
+
 
 data = []
 isOnScale = False
 
 EMULATE_HX711=False
 
-referenceUnit = 22.7873473
+referenceUnit = 22.313
 
 if not EMULATE_HX711:
     import RPi.GPIO as GPIO
@@ -56,11 +62,11 @@ while True:
         #check for a spike in the data. 
         #print the range between point 50 and point 50 - 2
         change = (data[len(data)-1] - data[len(data)-2])/2
-        
+        print(f'Change = {change}')
 
-        print(len(data))
+        #print(len(data))
         print(val)
-        print(change)
+        #print(change)
 
         hx.power_down()
         hx.power_up()
