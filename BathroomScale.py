@@ -2,12 +2,15 @@
 # To do: 
 #   put all weights in a list or dictionary
 #   analyze all data for a spike and get all numbers from that spike
+#   if the change in slope between a point and point +2 is positive and huge then set is on scale equal to true
+#   if the change in slope between a point and point +2 is negative and huge then set is on scale equal to false
 
 
 import time
 import sys
 
 data = []
+isOnScale = False
 
 EMULATE_HX711=False
 
@@ -45,11 +48,19 @@ while True:
         val = hx.get_weight(5)
         val = val/453.59237
         data.append(val)
+
+        #limit data to like 50 or so data points
         if len(data) > 50:
             data.pop(0)
 
+        #check for a spike in the data. 
+        #print the range between point 50 and point 50 - 2
+        change = (data[len(data)-1] - data[len(data)-2])/2
+        
+
         print(len(data))
         print(val)
+        print(change)
 
         hx.power_down()
         hx.power_up()
