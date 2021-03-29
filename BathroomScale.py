@@ -92,6 +92,7 @@ while True:
                 isOnScale = False
                 WeightData.clear()
                 webhook.send("See you tomorrow!")
+                lcd.lcd_clear()
         #print(f'Change = {change}')
 
         #print(len(data))
