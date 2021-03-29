@@ -59,8 +59,17 @@ wDataMin = 0.0
 wDataMax = 0.0
 wDataAvg = 0.0
 
-while True:
+# isOnscale = false
+# if the user steps on the scale
+#   isOnScale = true
+# if the user steps off the scale
+#   isOnScale = false
 
+# if isOnScale = true
+#   print("Collecting Data") on the bottom line
+
+
+while True:
     try:
         val = hx.get_weight(5)
         val = val * -1
@@ -72,10 +81,10 @@ while True:
         if len(data) > 50:
             data.pop(0)
 
+
         #check for a spike in the data. 
         #print the range between point 50 and point 50 - 2
         change = (data[len(data)-1] - data[len(data)-2])/2
-
         if (change > 10 and isOnScale == False):
                 isOnScale = True
                 webhook.send("You Stepped On The Scale, please stay on the scale while we calculate data...")
@@ -86,15 +95,33 @@ while True:
         #print(f'Change = {change}')
 
         #print(len(data))
+        sprTick = 0
         if (isOnScale):
                 print(val)
                 WeightData.append(val)
+                lcd.lcd_display_string("Collecting Data", 2)
+                if (len(data) < 50):
+                    if (sprTick == 0){
+                        lcd.lcd_display_string("\\", 2, 15)
+                        sprTick += 1    
+                    else if (sprTick == 1):
+                        lcd.lcd_display_string("|", 2, 15)
+                        sprTick += 1
+                    else if (sprTick == 2):
+                        lcd.lcd_display_string("/", 2, 15)
+                        sprTick += 1
+                    else if (sprTick == 3):
+                        lcd.lcd_display_string("-", 2, 15)
+                        sprTick = 0
 
         if (len(WeightData) == 12):
                 wData = WeightData[2:]
                 wDataMax = max(wData)
                 wDataMin = min(wData)
                 wDataAvg = sum(wData)/len(wData)
+                lcd.lcd_display_string("Avg: ", 2)
+                lcd.lcd.display_string(str(int(wDataAvg)), 2, 5)
+                
                 webhook.send(f'Heres the data from this weigh-in:\nMax = {wDataMax}\nMin = {wDataMin}\nAvg = {wDataAvg}')
                 webhook.send(f'You may now step off of the scale...')
 
