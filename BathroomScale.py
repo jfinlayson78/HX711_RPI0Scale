@@ -106,19 +106,15 @@ while True:
         if (isOnScale):
                 print(val)
                 WeightData.append(val)
-                lcd.lcd_display_string("Collecting Data", 2)
-
+                
                 if (len(WeightData) < 12):
                     if (sprTick == 0):
-                        lcd.lcd_display_string("\\", 2, 15)
-                        sprTick += 1
-                    elif (sprTick == 1):
                         lcd.lcd_display_string("|", 2, 15)
                         sprTick += 1
-                    elif (sprTick == 2):
+                    elif (sprTick == 1):
                         lcd.lcd_display_string("/", 2, 15)
                         sprTick += 1
-                    elif (sprTick == 3):
+                    elif (sprTick == 2):
                         lcd.lcd_display_string("-", 2, 15)
                         sprTick = 0
 
@@ -133,6 +129,9 @@ while True:
 
                 webhook.send(f'Heres the data from this weigh-in:\nMax = {wDataMax}\nMin = {wDataMin}\nAvg = {wDataAvg}')
                 webhook.send(f'You may now step off of the scale...')
+        else:
+                lcd.lcd_display_string("Collecting Data", 2)
+
 
         hx.power_down()
         hx.power_up()
