@@ -1,4 +1,4 @@
-#! /usr/bin/python2
+	#! /usr/bin/python2
 # To do:
 #   put all weights in a list or dictionary
 #   analyze all data for a spike and get all numbers from that spike
@@ -80,7 +80,6 @@ while True:
         lcd.lcd_clear()
         lcd.lcd_display_string(str(int(val)), 1)
 
-
         #append the value to the data array
         data.append(val)
 
@@ -88,35 +87,17 @@ while True:
         if len(data) > 50:
             data.pop(0)
 
-        #check for a spike in the data (someone steps on the scale).
+        #check for a spike in the data (occurs when someone steps on the scale).
         change = (data[len(data)-1] - data[len(data)-2])/2
 
         if (change > 10):
                 isOnScale = True
                 webhook.send("You Stepped On The Scale, please stay on the scale while we calculate data...")
-        elif (change < -10):
-                isOnScale = False
-                WeightData.clear()
-                webhook.send("See you tomorrow!")
-                lcd.lcd_clear()
-        #print(f'Change = {change}')
-
-        #print(len(data))
 
         if (isOnScale):
                 print(val)
                 WeightData.append(val)
                 
-                if (len(WeightData) < 12):
-                    if (sprTick == 0):
-                        lcd.lcd_display_string("|", 2, 15)
-                        sprTick += 1
-                    elif (sprTick == 1):
-                        lcd.lcd_display_string("/", 2, 15)
-                        sprTick += 1
-                    elif (sprTick == 2):
-                        lcd.lcd_display_string("-", 2, 15)
-                        sprTick = 0
 
         if (len(WeightData) >= 12):
                 wData = WeightData[2:]
@@ -127,11 +108,23 @@ while True:
                 lcd.lcd_display_string("Avg: ", 2)
                 lcd.lcd_display_string(str(int(wDataAvg)), 2, 5)
 
-                webhook.send(f'Heres the data from this weigh-in:\nMax = {wDataMax}\nMin = {wDataMin}\nAvg = {wDataAvg}')
-                webhook.send(f'You may now step off of the scale...')
-        elif (isOnScale):
+                if (change < -10):
+                    isOnScale = False
+                    WeightData.clear()
+                    webhook.send(f'Heres the data from this weigh-in:\nMax = {wDataMax}\nMin = {wDataMin}\nAvg = {wDataAvg}')
+                    webhook.send("See you tomorrow!")
+                    lcd.lcd_clear()
+        else:
                 lcd.lcd_display_string("Collecting Data", 2)
-
+                if (sprTick == 0):
+                        lcd.lcd_display_string("|", 2, 15)
+                        sprTick += 1
+                    elif (sprTick == 1):
+                        lcd.lcd_display_string("/", 2, 15)
+                        sprTick += 1
+                    elif (sprTick == 2):
+                        lcd.lcd_display_string("-", 2, 15)
+                        sprTick = 0
 
         hx.power_down()
         hx.power_up()
