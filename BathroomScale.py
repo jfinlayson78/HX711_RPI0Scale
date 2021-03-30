@@ -69,6 +69,7 @@ wDataAvg = 0.0
 #   print("Collecting Data") on the bottom line
 
 sprTick = 0
+
 while True:
     try:
         # get the value from the scale
@@ -79,7 +80,7 @@ while True:
         #print the value on the the scale
         lcd.lcd_clear()
         lcd.lcd_display_string(str(int(val)), 1)
-
+        
         #append the value to the data array
         data.append(val)
 
