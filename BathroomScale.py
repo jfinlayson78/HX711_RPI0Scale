@@ -1,4 +1,4 @@
-	#! /usr/bin/python2
+#! /usr/bin/python2
 # To do:
 #   put all weights in a list or dictionary
 #   analyze all data for a spike and get all numbers from that spike
@@ -129,7 +129,7 @@ while True:
 
                 webhook.send(f'Heres the data from this weigh-in:\nMax = {wDataMax}\nMin = {wDataMin}\nAvg = {wDataAvg}')
                 webhook.send(f'You may now step off of the scale...')
-        else:
+        elif (isOnScale):
                 lcd.lcd_display_string("Collecting Data", 2)
 
 
