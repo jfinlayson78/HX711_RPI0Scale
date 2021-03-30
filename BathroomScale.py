@@ -1,4 +1,4 @@
-#! /usr/bin/python2
+	#! /usr/bin/python2
 # To do:
 #   put all weights in a list or dictionary
 #   analyze all data for a spike and get all numbers from that spike
@@ -68,27 +68,33 @@ wDataAvg = 0.0
 # if isOnScale = true
 #   print("Collecting Data") on the bottom line
 
-
+sprTick = 0
 while True:
     try:
+        # get the value from the scale
         val = hx.get_weight(5)
         val = val * -1
         val = val/453.59237
+
+        #print the value on the the scale
         lcd.lcd_clear()
         lcd.lcd_display_string(str(int(val)), 1)
+
+
+        #append the value to the data array
         data.append(val)
+
         #limit data to like 50 or so data points
         if len(data) > 50:
             data.pop(0)
 
-
-        #check for a spike in the data. 
-        #print the range between point 50 and point 50 - 2
+        #check for a spike in the data (someone steps on the scale).
         change = (data[len(data)-1] - data[len(data)-2])/2
-        if (change > 10 and isOnScale == False):
+
+        if (change > 10):
                 isOnScale = True
                 webhook.send("You Stepped On The Scale, please stay on the scale while we calculate data...")
-        if (change < -10 and isOnScale == True):
+        elif (change < -10):
                 isOnScale = False
                 WeightData.clear()
                 webhook.send("See you tomorrow!")
@@ -96,33 +102,35 @@ while True:
         #print(f'Change = {change}')
 
         #print(len(data))
-        sprTick = 0
+
         if (isOnScale):
                 print(val)
                 WeightData.append(val)
                 lcd.lcd_display_string("Collecting Data", 2)
-                if (len(data) < 50):
-                    if (sprTick == 0){
+
+                if (len(WeightData) < 12):
+                    if (sprTick == 0):
                         lcd.lcd_display_string("\\", 2, 15)
-                        sprTick += 1    
-                    else if (sprTick == 1):
+                        sprTick += 1
+                    elif (sprTick == 1):
                         lcd.lcd_display_string("|", 2, 15)
                         sprTick += 1
-                    else if (sprTick == 2):
+                    elif (sprTick == 2):
                         lcd.lcd_display_string("/", 2, 15)
                         sprTick += 1
-                    else if (sprTick == 3):
+                    elif (sprTick == 3):
                         lcd.lcd_display_string("-", 2, 15)
                         sprTick = 0
 
-        if (len(WeightData) == 12):
+        if (len(WeightData) >= 12):
                 wData = WeightData[2:]
                 wDataMax = max(wData)
                 wDataMin = min(wData)
                 wDataAvg = sum(wData)/len(wData)
+
                 lcd.lcd_display_string("Avg: ", 2)
-                lcd.lcd.display_string(str(int(wDataAvg)), 2, 5)
-                
+                lcd.lcd_display_string(str(int(wDataAvg)), 2, 5)
+
                 webhook.send(f'Heres the data from this weigh-in:\nMax = {wDataMax}\nMin = {wDataMin}\nAvg = {wDataAvg}')
                 webhook.send(f'You may now step off of the scale...')
 
