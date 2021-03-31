@@ -59,15 +59,6 @@ wDataMin = 0.0
 wDataMax = 0.0
 wDataAvg = 0.0
 
-# isOnscale = false
-# if the user steps on the scale
-#   isOnScale = true
-# if the user steps off the scale
-#   isOnScale = false
-
-# if isOnScale = true
-#   print("Collecting Data") on the bottom line
-
 sprTick = 0
 
 while True:
@@ -93,7 +84,6 @@ while True:
 
         if (change > 10):
                 isOnScale = True
-                webhook.send("You Stepped On The Scale, please stay on the scale while we calculate data...")
 
         if (len(WeightData) >= 12):
                 wData = WeightData[2:]
@@ -107,9 +97,10 @@ while True:
                 if (change < -10):
                     isOnScale = False
                     WeightData.clear()
-                    webhook.send(f'Heres the data from this weigh-in:\nMax = {wDataMax}\nMin = {wDataMin}\nAvg = {wDataAvg}')
-                    webhook.send("See you tomorrow!")
+                    webhook.send(f'Heres the data from weigh-in at :\nMax = {wDataMax}\nMin = {wDataMin}\nAvg = {wDataAvg}')
                     lcd.lcd_clear()
+                    try 
+                        fileObject = open('bioData.txt')
         elif(isOnScale):
                 WeightData.append(val)
                 lcd.lcd_display_string("Collecting Data", 2)
@@ -121,6 +112,9 @@ while True:
                     sprTick += 1
                 elif (sprTick == 2):
                     lcd.lcd_display_string("-", 2, 15)
+                    sprTick += 1
+                elif (sprTick == 3)
+                    lcd.lcd_display_string("\ddd", 2, 15)
                     sprTick = 0
 
         hx.power_down()
