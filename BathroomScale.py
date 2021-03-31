@@ -8,6 +8,7 @@
 
 import l2c_LCD_driver
 import time
+import datetime
 import sys
 import praw
 import requests
@@ -101,7 +102,8 @@ while True:
                     lcd.lcd_clear()
                     try 
                         with open('bioData.txt', 'a') as f:
-                            f.write(f'{time},{day},{month},{year},{wDataMin},{wDataAvg},{wDataMax}')
+                            x = datetime.datetime.now()
+                            f.write(f'{x.hour}:{x.minute}:{x.second},{x.day}/{x.month}/{x.year},{wDataMin},{wDataAvg},{wDataMax}')
                         
         elif(isOnScale):
                 WeightData.append(val)
