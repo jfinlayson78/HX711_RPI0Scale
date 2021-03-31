@@ -100,7 +100,9 @@ while True:
                     webhook.send(f'Heres the data from weigh-in at :\nMax = {wDataMax}\nMin = {wDataMin}\nAvg = {wDataAvg}')
                     lcd.lcd_clear()
                     try 
-                        fileObject = open('bioData.txt')
+                        with open('bioData.txt', 'a') as f:
+                            f.write(f'{time},{day},{month},{year},{wDataMin},{wDataAvg},{wDataMax}')
+                        
         elif(isOnScale):
                 WeightData.append(val)
                 lcd.lcd_display_string("Collecting Data", 2)
