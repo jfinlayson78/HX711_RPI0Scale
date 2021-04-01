@@ -100,10 +100,10 @@ while True:
                     WeightData.clear()
                     webhook.send(f'Heres the data from weigh-in at :\nMax = {wDataMax}\nMin = {wDataMin}\nAvg = {wDataAvg}')
                     lcd.lcd_clear()
-                    try 
-                        with open('bioData.txt', 'a') as f:
-                            x = datetime.datetime.now()
-                            f.write(f'{x.hour}:{x.minute}:{x.second},{x.day}/{x.month}/{x.year},{wDataMin},{wDataAvg},{wDataMax}')
+                    
+                    with open('bioData.txt', 'a') as f:
+                        x = datetime.datetime.now()
+                        f.write(f'{x.hour}:{x.minute}:{x.second},{x.day}/{x.month}/{x.year},{wDataMin},{wDataAvg},{wDataMax}')
                         
         elif(isOnScale):
                 WeightData.append(val)
@@ -117,7 +117,7 @@ while True:
                 elif (sprTick == 2):
                     lcd.lcd_display_string("-", 2, 15)
                     sprTick += 1
-                elif (sprTick == 3)
+                elif (sprTick == 3):
                     lcd.lcd_display_string("\ddd", 2, 15)
                     sprTick = 0
 
