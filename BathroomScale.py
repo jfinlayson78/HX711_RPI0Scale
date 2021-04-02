@@ -1,4 +1,4 @@
-	#! /usr/bin/python2
+#! /usr/bin/python2
 # To do:
 #   put all weights in a list or dictionary
 #   analyze all data for a spike and get all numbers from that spike
@@ -103,7 +103,7 @@ while True:
                     
                     with open('bioData.txt', 'a') as f:
                         x = datetime.datetime.now()
-                        f.write(f'{x.hour}:{x.minute}:{x.second},{x.day}/{x.month}/{x.year},{wDataMin},{wDataAvg},{wDataMax}')
+                        f.write(f'{x.hour}:{x.minute}:{x.second},{x.day}/{x.month}/{x.year},{wDataMin},{wDataAvg},{wDataMax}\n')
                         
         elif(isOnScale):
                 WeightData.append(val)
@@ -116,9 +116,6 @@ while True:
                     sprTick += 1
                 elif (sprTick == 2):
                     lcd.lcd_display_string("-", 2, 15)
-                    sprTick += 1
-                elif (sprTick == 3):
-                    lcd.lcd_display_string("\ddd", 2, 15)
                     sprTick = 0
 
         hx.power_down()
