@@ -96,13 +96,13 @@ while True:
                 lcd.lcd_display_string(str(int(wDataAvg)), 2, 5)
 
                 if (change < -10):
+                    x = datetime.datetime.now()
                     isOnScale = False
                     WeightData.clear()
-                    webhook.send(f'Heres the data from weigh-in at :\nMax = {wDataMax}\nMin = {wDataMin}\nAvg = {wDataAvg}')
+                    webhook.send(f'Heres the data from weigh-in at {x.day}/{x.month}/{x.year}:\nMax = {wDataMax}\nMin = {wDataMin}\nAvg = {wDataAvg}')
                     lcd.lcd_clear()
                     
                     with open('bioData.txt', 'a') as f:
-                        x = datetime.datetime.now()
                         f.write(f'{x.hour}:{x.minute}:{x.second},{x.day}/{x.month}/{x.year},{wDataMin},{wDataAvg},{wDataMax}\n')
                         
         elif(isOnScale):
