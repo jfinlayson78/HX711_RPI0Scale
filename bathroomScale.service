@@ -1,0 +1,14 @@
+[Unit]
+Description=Weight Recording Bathroom Scale
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 -u BathroomScale.py
+WorkingDirectory=/home/pi/Desktop/projects/autoscale/HX11_BathroomScale
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
