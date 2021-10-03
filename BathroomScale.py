@@ -103,7 +103,7 @@ while True:
                     lcd.lcd_clear()
                     
                     with open('bioData.txt', 'a') as f:
-                        f.write(f'{x.timestamp()},{wDataMin},{wDataAvg},{wDataMax}\n}'')
+                        f.write(f'{x.timestamp()},{wDataMin},{wDataAvg},{wDataMax}\n')
                         #f.write(f'{x.hour}:{x.minute}:{x.second},{x.day}/{x.month}/{x.year},{wDataMin},{wDataAvg},{wDataMax}\n')
                         
         elif(isOnScale):
