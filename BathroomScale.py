@@ -64,6 +64,7 @@ sprTick = 0
 
 while True:
     try:
+
         # get the value from the scale
         val = hx.get_weight(5)
         val = val * -1
@@ -83,7 +84,9 @@ while True:
         #check for a spike in the data (occurs when someone steps on the scale).
         change = (data[len(data)-1] - data[len(data)-2])/2
 
+        # If there's an increasing change start weighing stuff and turn on the light
         if (change > 10):
+                lcd.backlight(1)
                 isOnScale = True
 
         if (len(WeightData) >= 12):
@@ -101,6 +104,8 @@ while True:
                     WeightData.clear()
                     webhook.send(f'Heres the data from weigh-in at {x.day}/{x.month}/{x.year}:\nMax = {wDataMax}\nMin = {wDataMin}\nAvg = {wDataAvg}')
                     lcd.lcd_clear()
+                    time.sleep(3)
+                    lcd.backlight(0)
                     
                     with open('bioData.txt', 'a') as f:
                         f.write(f'{x.timestamp()},{wDataMin},{wDataAvg},{wDataMax}\n')
